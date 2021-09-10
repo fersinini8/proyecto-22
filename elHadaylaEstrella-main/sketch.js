@@ -2,7 +2,7 @@ var starImg,bgImg;
 var star, starBody;
 //crea la variable para el sprite del hada y fairyImg
 var fairyImg,fairy;
-var fairyImg1, fairyImg2;
+var fairyImg1, fairyImg2, fairyVoice;
 
 const Engine = Matter.Engine;
 const World = Matter.World;
@@ -12,21 +12,21 @@ const Body = Matter.Body;
 function preload()
 {
 	starImg = loadImage("images/star.png");
+	fairyImg = loadAnimation("images/fairyImage1.png","images/fairyImage2.png");
 	bgImg = loadImage("images/starNight.png");
-	//carga aquí la animación del hada
-	fairyImg = loadImage("images/fairy.png");
-	fairyImg = loadAnimaion("images/fairyImg1.png","images/fairyImg2.png");
+	fairyVoice = loadSound("sound/JoyMusic.mp3");
 }
 
 function setup() {
 	createCanvas(800, 750);
 
 	//escribe el código para reproducir el sonido fairyVoice
-	fairyVoice = loadSound("sound/JoyMusic.mp3");
+	fairyVoice.play();
 
 	//crea el sprite del hada, y agrega la animación para el hada
-    fairy = createSprite(100,70);
-	fairy.setAnimation();
+    fairy = createSprite(130,520);
+	fairy.addAnimation("fairyflying",fairyImg);
+	fairy.scale = 0.25;
 
 	star = createSprite(650,30);
 	star.addImage(starImg);
@@ -67,10 +67,13 @@ function keyPressed() {
 	}
 
 	//escribe el código para mover al hada a la izquierda y derecha
-	if (KeyDown(LEFT_ARROW)){
-		moveBy.fairyImg
+	if (keyCode === LEFT_ARROW){
+		fairy.x = fairy.x + 20;
 	}
-	if (KeyDown(RIGTH_ARROW)){
-		moveBy.fairyImg
+	if (keyCode === RIGTH_ARROW){
+		fairy.x = fairy.x - 20;
+	}
+	if (keyCode === DOWN_ARROW){
+		Matter.Body.setStatic(starBody,false);
 	}
 }
